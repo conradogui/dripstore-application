@@ -14,29 +14,24 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 
-
 const Home = () => {
   const [data, setData] = useState([]);
   const URL_PRODUTOS = "https://dripstore-api-y1ak.onrender.com/api/produto";
-  
+
   const getProdutos = async () => {
     try {
       const response = await axios.get(URL_PRODUTOS);
-      console.log(response.data);
       setData(response.data);
     } catch (error) {
       console.log(error);
     }
   };
-  
+
   useEffect(() => {
     getProdutos();
   }, []);
   return (
     <div className="relative font-sans text-gray-800">
-      <div className="fixed z-10 w-full bg-white shadow-md">
-        <Navbar />
-      </div>
       <div className="pt-20">
         <Carousel
           opts={{
@@ -83,9 +78,7 @@ const Home = () => {
             <CarouselItem>
               <div className="relative w-full h-[calc(100vh-80px)] sm:h-[calc(70vh-80px)] items-center grayscale opacity-95">
                 <div className="absolute bottom-8 left-8 text-white p-4 bg-black bg-opacity-50 rounded">
-                  <p className="text-xl font-bold">
-                    Texto
-                  </p>
+                  <p className="text-xl font-bold">Texto</p>
                   <Link to="/explore" className="text-sm underline">
                     Saiba mais
                   </Link>
@@ -119,15 +112,11 @@ const Home = () => {
       </div>
       <div className="mt-16 px-4 sm:px-8 md:px-16 bg-gray-100 py-12">
         <h3 className="text-2xl font-semibold text-center mb-8">Sobre Nós</h3>
-        <p className="text-lg text-center max-w-4xl mx-auto">
-          Texto
-        </p>
+        <p className="text-lg text-center max-w-4xl mx-auto">Texto</p>
       </div>
       <div className="mt-16 px-4 sm:px-8 md:px-16 py-12 bg-blue-600 text-white text-center">
         <h3 className="text-2xl font-semibold mb-8">Entre em Contato</h3>
-        <p className="text-lg mb-4">
-          Texto
-        </p>
+        <p className="text-lg mb-4">Texto</p>
         <button className="bg-white text-blue-600 px-6 py-2 rounded-full font-semibold hover:bg-gray-100 transition">
           Fale Conosco
         </button>

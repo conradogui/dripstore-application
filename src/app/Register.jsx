@@ -1,7 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
 import shoes from "../assets/img/logog.png";
 
 const Register = () => {
+  const [formData, setFormData] = useState({
+    nome: '',
+    email: '',
+    senha: '',
+    confirmSenha: '',
+    perfis: [],
+  });
+
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (formData.senha !== formData.confirmSenha) {
+      setError("As senhas devem ser iguais!");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/signup", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nome: formData.nome,
+          email: formData.email,
+          senha: formData.senha,
+          perfis: formData.perfis,
+        }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setSuccess(data.msg);
+        setError(""); 
+        setFormData({ nome: '', email: '', senha: '', confirmSenha: '', perfis: [] });
+      } else {
+        setError(data.message);
+        setSuccess("");
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setError("Ocorreu um erro ao tentar registrar.");
+    }
+  };
+
   return (
     <div className="relative flex flex-col md:flex-row items-center justify-center min-h-screen bg-gray-100">
       <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-gray-300 opacity-60"></div>
@@ -12,7 +60,9 @@ const Register = () => {
         <h2 className="text-4xl font-bold text-center text-gray-800 mb-8">
           Cadastre-se
         </h2>
-        <form className="space-y-6">
+        {success && <p className="text-sm text-green-600 text-center mb-4">{success}</p>}
+        {error && <p className="text-sm text-red-600 text-center mb-4">{error}</p>}
+        <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
             <label className="block text-sm font-semibold text-gray-700">
               Nome Completo
@@ -22,6 +72,9 @@ const Register = () => {
               id="name"
               className="w-full px-4 py-3 mt-1 text-gray-800 bg-gray-100 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
               placeholder="Digite seu nome"
+              value={formData.nome}
+              onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
+              required
             />
           </div>
           <div>
@@ -33,6 +86,9 @@ const Register = () => {
               id="email"
               className="w-full px-4 py-3 mt-1 text-gray-800 bg-gray-100 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
               placeholder="Digite seu email"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              required
             />
           </div>
           <div>
@@ -44,6 +100,9 @@ const Register = () => {
               id="password"
               className="w-full px-4 py-3 mt-1 text-gray-800 bg-gray-100 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
               placeholder="Crie uma senha"
+              value={formData.senha}
+              onChange={(e) => setFormData({ ...formData, senha: e.target.value })}
+              required
             />
           </div>
           <div>
@@ -55,6 +114,9 @@ const Register = () => {
               id="confirm-password"
               className="w-full px-4 py-3 mt-1 text-gray-800 bg-gray-100 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
               placeholder="Confirme sua senha"
+              value={formData.confirmSenha}
+              onChange={(e) => setFormData({ ...formData, confirmSenha: e.target.value })}
+              required
             />
           </div>
           <button
