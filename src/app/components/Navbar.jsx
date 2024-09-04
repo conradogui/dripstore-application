@@ -52,25 +52,28 @@ const Navbar = () => {
               <NavigationMenuLink>Link</NavigationMenuLink>
             </NavigationMenuContent>
           </NavigationMenuItem>
-          <NavLink
-            to={isAuthenticated ? "/cart" : "/login"}
-            className="cursor-pointer p-2 hover:scale-105 transition-all hover:bg-black hover:text-white"
-          >
-            Carrinho
-          </NavLink>
-          <NavLink
-            to={isAuthenticated ? "/wish" : "/login"}
-            className="cursor-pointer p-2 hover:scale-105 transition-all hover:bg-black hover:text-white"
-          >
-            <Heart />
-          </NavLink>
-          {isAuthenticated && userRole.includes("PERFIL_ADMIN") && (
+          {isAuthenticated && userRole.includes("PERFIL_ADMIN") ? (
             <NavLink
               to="/dashboard-admin"
               className="cursor-pointer p-2 hover:scale-105 transition-all hover:bg-black hover:text-white"
             >
               Dashboard Admin
             </NavLink>
+          ) : (
+            <>
+              <NavLink
+                to={isAuthenticated ? "/cart" : "/login"}
+                className="cursor-pointer p-2 hover:scale-105 transition-all hover:bg-black hover:text-white"
+              >
+                Carrinho
+              </NavLink>
+              <NavLink
+                to={isAuthenticated ? "/wish" : "/login"}
+                className="cursor-pointer p-2 hover:scale-105 transition-all hover:bg-black hover:text-white"
+              >
+                <Heart />
+              </NavLink>
+            </>
           )}
         </NavigationMenuList>
       </NavigationMenu>
@@ -113,4 +116,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-

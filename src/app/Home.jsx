@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import model1 from "../assets/img/model1.jpg";
 import model2 from "../assets/img/model2.jpg";
 import model3 from "../assets/img/model3.jpg";
 import Navbar from "./components/Navbar.jsx";
-import axios from "axios";
 import { useAuth } from "../context/AuthContext.jsx";
 import {
   Carousel,
@@ -16,22 +15,7 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 
 const Home = () => {
-  const [data, setData] = useState([]);
-  const URL_PRODUTOS = "https://dripstore-api-y1ak.onrender.com/api/produto";
-  const { addToCart, addToWishList } = useAuth(); 
-
-  const getProdutos = async () => {
-    try {
-      const response = await axios.get(URL_PRODUTOS);
-      setData(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getProdutos();
-  }, []);
+  const { produto, addToCart, addToWishList } = useAuth(); 
 
   return (
     <div className="relative font-sans text-gray-800">
@@ -101,7 +85,7 @@ const Home = () => {
           Itens Populares
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          {data.map((item) => (
+          {produto.map((item) => (
             <div
               key={item.id}
               className="bg-white shadow-lg p-6 rounded-lg hover:shadow-xl transition-shadow"
@@ -152,3 +136,4 @@ const Home = () => {
 };
 
 export default Home;
+
