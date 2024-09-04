@@ -24,10 +24,9 @@ const Login = () => {
     try {
       const response = await axios.post("http://localhost:5000/api/auth/signin", { email, senha });
       
-      const { token, perfis } = response.data;
+      const { token, id, perfis } = response.data; 
 
-      localStorage.setItem("token", token);
-      login(token, perfis); 
+      login(token, id, perfis); 
 
       navigate("/");
     } catch (err) {

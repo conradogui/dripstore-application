@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom";
-import { Heart } from "lucide-react";
+import { Heart, CircleUserRound } from "lucide-react";
 import { useAuth } from "../../context/AuthContext.jsx";
-import { CircleUserRound } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -17,7 +16,7 @@ const Navbar = () => {
   const { isAuthenticated, userRole, logout } = useAuth();
 
   return (
-    <nav className="flex justify-around gap-8 font-bold text-xl w-full">
+    <nav className="flex justify-around gap-8 font-bold text-xl w-full shadow-lg">
       <NavLink
         to="/"
         className="cursor-pointer flex items-center p-2 transition-transform transform hover:scale-105 hover:text-gray-800"
@@ -60,11 +59,19 @@ const Navbar = () => {
             Carrinho
           </NavLink>
           <NavLink
-            to={isAuthenticated ? "/liked-products" : "/login"}
+            to={isAuthenticated ? "/wish" : "/login"}
             className="cursor-pointer p-2 hover:scale-105 transition-all hover:bg-black hover:text-white"
           >
             <Heart />
           </NavLink>
+          {isAuthenticated && userRole.includes("PERFIL_ADMIN") && (
+            <NavLink
+              to="/dashboard-admin"
+              className="cursor-pointer p-2 hover:scale-105 transition-all hover:bg-black hover:text-white"
+            >
+              Dashboard Admin
+            </NavLink>
+          )}
         </NavigationMenuList>
       </NavigationMenu>
       <div className="flex">
@@ -86,11 +93,10 @@ const Navbar = () => {
         ) : (
           <div className="flex justify-center items-center">
             <NavLink
-              to="/"
+              to="/profile"
               className="cursor-pointer p-2 hover:scale-105 transition-all hover:bg-black hover:text-white"
-              onClick={logout}
             >
-              <CircleUserRound/>
+              <CircleUserRound />
             </NavLink>
             <NavLink
               to="/"
@@ -107,3 +113,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

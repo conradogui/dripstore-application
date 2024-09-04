@@ -5,6 +5,7 @@ import model2 from "../assets/img/model2.jpg";
 import model3 from "../assets/img/model3.jpg";
 import Navbar from "./components/Navbar.jsx";
 import axios from "axios";
+import { useAuth } from "../context/AuthContext.jsx";
 import {
   Carousel,
   CarouselContent,
@@ -17,6 +18,7 @@ import Autoplay from "embla-carousel-autoplay";
 const Home = () => {
   const [data, setData] = useState([]);
   const URL_PRODUTOS = "https://dripstore-api-y1ak.onrender.com/api/produto";
+  const { addToCart, addToWishList } = useAuth(); 
 
   const getProdutos = async () => {
     try {
@@ -30,6 +32,7 @@ const Home = () => {
   useEffect(() => {
     getProdutos();
   }, []);
+
   return (
     <div className="relative font-sans text-gray-800">
       <div className="pt-20">
@@ -106,6 +109,18 @@ const Home = () => {
               <h4 className="text-lg font-semibold mb-2">{item.nome}</h4>
               <p className="text-gray-600">{item.descricao}</p>
               <p className="text-gray-800 font-semibold">${item.preco}</p>
+              <button
+                onClick={() => addToCart({ ...item, quantity: 1 })}
+                className="mt-4 px-4 py-2 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+              >
+                Adicionar ao Carrinho
+              </button>
+              <button
+                onClick={() => addToWishList(item)}
+                className="mt-2 px-4 py-2 font-semibold text-blue-600 bg-white border border-blue-600 rounded-lg hover:bg-blue-100"
+              >
+                Adicionar à Lista de Interesse
+              </button>
             </div>
           ))}
         </div>
