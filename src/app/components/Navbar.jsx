@@ -38,18 +38,74 @@ const Navbar = () => {
           </NavLink>
           <NavigationMenuItem>
             <NavigationMenuTrigger className="cursor-pointer p-2 hover:scale-105 transition-all hover:bg-black hover:text-white">
-              Produtos
-            </NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <NavigationMenuLink>Link</NavigationMenuLink>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuTrigger className="cursor-pointer p-2 hover:scale-105 transition-all hover:bg-black hover:text-white">
               Categorias
             </NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <NavigationMenuLink>Link</NavigationMenuLink>
+            <NavigationMenuContent> {/*Fazer componente com categorias de cada produto */}
+              <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px]">
+                <li className="row-span-1">
+                  <NavigationMenuLink href="/categorias/calca">
+                    <div className="flex h-full w-full select-none flex-col justify-end p-6 no-underline outline-none">
+                      <p className="text-sm leading-tight text-muted-foreground">
+                        Calça
+                      </p>
+                    </div>
+                  </NavigationMenuLink>
+                </li>
+                <li className="row-span-1">
+                  <NavigationMenuLink href="/categorias/tenis">
+                    <div className="flex h-full w-full select-none flex-col justify-end p-6 no-underline outline-none">
+                      <p className="text-sm leading-tight text-muted-foreground">
+                        Tênis
+                      </p>
+                    </div>
+                  </NavigationMenuLink>
+                </li>
+                <li className="row-span-1">
+                  <NavigationMenuLink href="/categorias/short">
+                    <div className="flex h-full w-full select-none flex-col justify-end p-6 no-underline outline-none">
+                      <p className="text-sm leading-tight text-muted-foreground">
+                        Short
+                      </p>
+                    </div>
+                  </NavigationMenuLink>
+                </li>
+                <li className="row-span-1">
+                  <NavigationMenuLink href="/categorias/camisa">
+                    <div className="flex h-full w-full select-none flex-col justify-end p-6 no-underline outline-none">
+                      <p className="text-sm leading-tight text-muted-foreground">
+                        Camisa
+                      </p>
+                    </div>
+                  </NavigationMenuLink>
+                </li>
+                <li className="row-span-1">
+                  <NavigationMenuLink href="/categorias/camiseta">
+                    <div className="flex h-full w-full select-none flex-col justify-end p-6 no-underline outline-none">
+                      <p className="text-sm leading-tight text-muted-foreground">
+                        Camiseta
+                      </p>
+                    </div>
+                  </NavigationMenuLink>
+                </li>
+                <li className="row-span-1">
+                  <NavigationMenuLink href="/categorias/acessorios">
+                    <div className="flex h-full w-full select-none flex-col justify-end p-6 no-underline outline-none">
+                      <p className="text-sm leading-tight text-muted-foreground">
+                        Acessórios
+                      </p>
+                    </div>
+                  </NavigationMenuLink>
+                </li>
+                <li className="row-span-1">
+                  <NavigationMenuLink href="/categorias/moletons">
+                    <div className="flex h-full w-full select-none flex-col justify-end p-6 no-underline outline-none">
+                      <p className="text-sm leading-tight text-muted-foreground">
+                        Moletons
+                      </p>
+                    </div>
+                  </NavigationMenuLink>
+                </li>
+              </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
           {isAuthenticated && userRole.includes("PERFIL_ADMIN") ? (

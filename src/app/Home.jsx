@@ -80,7 +80,7 @@ const Home = () => {
           </CarouselContent>
         </Carousel>
       </div>
-      <div className="mt-16 px-4 sm:px-8 md:px-16">
+      <div className="mt-16 px-4 sm:px-8 md:px-16"> {/*Adicionar função para identificar produtos populares*/}
         <h3 className="text-2xl font-semibold text-center mb-8">
           Itens Populares
         </h3>
