@@ -16,10 +16,6 @@ export function AuthProvider({ children }) {
     const token = localStorage.getItem("token");
     const storedUserId = localStorage.getItem("userId");
     const storedRoles = JSON.parse(localStorage.getItem("roles"));
-
-    console.log("Token:", token);
-    console.log("User ID:", storedUserId);
-    console.log("User Roles:", storedRoles);
   
     if (token && storedUserId && storedRoles) {
       setIsAuthenticated(true);
@@ -30,27 +26,20 @@ export function AuthProvider({ children }) {
       setUserRole(null);
       setUserId(null);
     }
-  
     axios
       .get("https://dripstore-api-y1ak.onrender.com/api/produto")
       .then((response) => setProduto(response.data))
       .catch((error) => console.error("Erro ao buscar produtos:", error));
-  
-    // Corrigir requisição de usuarios
-    if (storedRoles && storedRoles.includes("PERFIL_ADMIN")) {
-      axios
-        .get("https://dripstore-api-y1ak.onrender.com/api/usuario", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => setUsers(response.data))
-        .catch((error) => console.error("Erro ao buscar usuários:", error));
-    }
-  }, []);
-  
 
-  console.log(users);
+    axios
+    .get("http://localhost:5000/api/usuario", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => setUsers(response.data))
+    .catch((error) => console.error("Erro ao buscar usuários:", error));
+  }, []);
 
   function login(token, id, roles) {
     localStorage.setItem("token", token);
@@ -68,6 +57,43 @@ export function AuthProvider({ children }) {
     setIsAuthenticated(false);
     setUserRole(null);
     setUserId(null);
+  }
+
+  function deleteProduct(id) {
+    axios
+    .delete(`https://dripstore-api-y1ak.onrender.com/api/produto/${id}`)
+    .then(() => {
+      setProduto((prevProduto) => prevProduto.filter((item) => item.id !== id));
+    })
+    .catch((error) => {
+      console.error("Erro ao deletar produto:", error);
+    });
+  }
+
+  function updateProduct(id, updatedData) {
+    axios
+      .put(`https://dripstore-api-y1ak.onrender.com/api/produto/${id}`, updatedData)
+      .then(() => {
+        setProduto((prevProduto) =>
+          prevProduto.map((item) =>
+            item.id === id ? { ...item, ...updatedData } : item
+          )
+        );
+      })
+      .catch((error) => {
+        console.error("Erro ao atualizar produto:", error);
+      });
+  }
+
+  function createProduct(productData) {
+    axios
+      .post("https://dripstore-api-y1ak.onrender.com/api/produto", productData)
+      .then((response) => {
+        setProduto((prevProducts) => [...prevProducts, response.data]);
+      })
+      .catch((error) => {
+        console.error("Erro ao criar o produto:", error);
+      });
   }
 
   function addToCart(item) {
@@ -101,6 +127,9 @@ export function AuthProvider({ children }) {
         addToWishList,
         removeFromWishList,
         produto,
+        createProduct,
+        updateProduct,
+        deleteProduct,
         users,
       }}
     >
