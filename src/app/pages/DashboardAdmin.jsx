@@ -2,18 +2,16 @@ import React, { useState } from "react";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { useModal } from "../../context/ModalContext.jsx";
 import Modal from "../components/Modal.jsx";
-import ProductForm from "./ProductForm.jsx"; 
+import ProductForm from "./ProductForm.jsx";
 
 const DashboardAdmin = () => {
-  const { users, produto, deleteProduct, updateProduct } = useAuth();
+  const { users, produto, deleteProduct, updateProduct, createProduct } = useAuth();
   const { openModal, closeModal } = useModal();
   const [productToEdit, setProductToEdit] = useState(null);
 
   const handleDelete = (id) => {
-    deleteProduct(id, ...produto);
+    deleteProduct(id);
   };
-  
-
   const handleOpenModal = (product = null) => {
     setProductToEdit(product);
     openModal();
@@ -38,12 +36,12 @@ const DashboardAdmin = () => {
         {users.length === 0 ? (
           <p>Nenhum cliente encontrado.</p>
         ) : (
-          <table className="min-w-full bg-white">
+          <table className="min-w-full bg-white border border-gray-300">
             <thead>
               <tr>
-                <th className="py-2">Nome</th>
-                <th className="py-2">Email</th>
-                <th className="py-2">Data de Cadastro</th>
+                <th className="py-2 border-b">Nome</th>
+                <th className="py-2 border-b">Email</th>
+                <th className="py-2 border-b">Data de Cadastro</th>
               </tr>
             </thead>
             <tbody>
@@ -66,12 +64,12 @@ const DashboardAdmin = () => {
         {produto.length === 0 ? (
           <p>Nenhum produto encontrado.</p>
         ) : (
-          <table className="min-w-full bg-white">
+          <table className="min-w-full bg-white border border-gray-300">
             <thead>
               <tr>
-                <th className="py-2">Nome</th>
-                <th className="py-2">Preço</th>
-                <th className="py-2">Ações</th>
+                <th className="py-2 border-b">Nome</th>
+                <th className="py-2 border-b">Preço</th>
+                <th className="py-2 border-b">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -122,3 +120,4 @@ const DashboardAdmin = () => {
 };
 
 export default DashboardAdmin;
+

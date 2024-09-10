@@ -4,166 +4,115 @@ import { useAuth } from "../../context/AuthContext.jsx";
 import {
   NavigationMenu,
   NavigationMenuContent,
-  NavigationMenuIndicator,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
 
 const Navbar = () => {
   const { isAuthenticated, userRole, logout } = useAuth();
 
   return (
-    <nav className="flex justify-around gap-8 font-bold text-xl w-full shadow-lg">
+    <nav className="flex justify-between items-center px-4 py-3 bg-[#353535] text-white shadow-lg w-full">
       <NavLink
         to="/"
-        className="cursor-pointer flex items-center p-2 transition-transform transform hover:scale-105 hover:text-gray-800"
+        className="flex items-center text-3xl font-bold transition-transform transform hover:scale-110"
       >
-        <span className="text-3xl font-bold text-gray-900 hover:text-gray-600 transition-colors">
-          GC
-        </span>
-        <span className="text-3xl font-bold text-gray-900 ml-2 hover:text-gray-600 transition-colors">
-          STORE
-        </span>
+        <span className="text-white">GC</span>
+        <span className="text-[#284B63] ml-2">STORE</span>
       </NavLink>
-      <NavigationMenu>
-        <NavigationMenuList>
+      <div className="hidden md:flex space-x-8">
+        <NavLink
+          to="/"
+          className="cursor-pointer p-2 hover:text-[#D9D9D9] transition-all"
+        >
+          Home
+        </NavLink>
+        <NavigationMenu>
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger className="cursor-pointer p-2 hover:text-[#D9D9D9] transition-all">
+                Categorias
+              </NavigationMenuTrigger>
+              <NavigationMenuContent className="mt-2 bg-[#FFFFFF] text-[#353535] shadow-lg rounded-lg p-4">
+                <ul className="grid gap-3 md:w-[400px] lg:w-[500px]">
+                  {[
+                    { label: "Calça", path: "/categorias/calca" },
+                    { label: "Tênis", path: "/categorias/tenis" },
+                    { label: "Short", path: "/categorias/short" },
+                    { label: "Camisa", path: "/categorias/camisa" },
+                    { label: "Camiseta", path: "/categorias/camiseta" },
+                    { label: "Acessórios", path: "/categorias/acessorios" },
+                    { label: "Moletons", path: "/categorias/moletons" },
+                  ].map((item, index) => (
+                    <li key={index} className="row-span-1">
+                      <NavLink
+                        to={item.path}
+                        className="block text-center bg-[#3C6E71] text-white p-4 rounded-md hover:bg-[#284B63] transition-colors"
+                      >
+                        {item.label}
+                      </NavLink>
+                    </li>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
+        {isAuthenticated && userRole.includes("PERFIL_ADMIN") && (
           <NavLink
-            to="/"
-            className="cursor-pointer p-2 hover:scale-105 transition-all hover:bg-black hover:text-white"
+            to="/dashboard-admin"
+            className="cursor-pointer p-2 hover:text-[#D9D9D9] transition-all"
           >
-            Home
+            Dashboard Admin
           </NavLink>
-          <NavigationMenuItem>
-            <NavigationMenuTrigger className="cursor-pointer p-2 hover:scale-105 transition-all hover:bg-black hover:text-white">
-              Categorias
-            </NavigationMenuTrigger>
-            <NavigationMenuContent> {/*Fazer componente com categorias de cada produto */}
-              <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px]">
-                <li className="row-span-1">
-                  <NavigationMenuLink href="/categorias/calca">
-                    <div className="flex h-full w-full select-none flex-col justify-end p-6 no-underline outline-none">
-                      <p className="text-sm leading-tight text-muted-foreground">
-                        Calça
-                      </p>
-                    </div>
-                  </NavigationMenuLink>
-                </li>
-                <li className="row-span-1">
-                  <NavigationMenuLink href="/categorias/tenis">
-                    <div className="flex h-full w-full select-none flex-col justify-end p-6 no-underline outline-none">
-                      <p className="text-sm leading-tight text-muted-foreground">
-                        Tênis
-                      </p>
-                    </div>
-                  </NavigationMenuLink>
-                </li>
-                <li className="row-span-1">
-                  <NavigationMenuLink href="/categorias/short">
-                    <div className="flex h-full w-full select-none flex-col justify-end p-6 no-underline outline-none">
-                      <p className="text-sm leading-tight text-muted-foreground">
-                        Short
-                      </p>
-                    </div>
-                  </NavigationMenuLink>
-                </li>
-                <li className="row-span-1">
-                  <NavigationMenuLink href="/categorias/camisa">
-                    <div className="flex h-full w-full select-none flex-col justify-end p-6 no-underline outline-none">
-                      <p className="text-sm leading-tight text-muted-foreground">
-                        Camisa
-                      </p>
-                    </div>
-                  </NavigationMenuLink>
-                </li>
-                <li className="row-span-1">
-                  <NavigationMenuLink href="/categorias/camiseta">
-                    <div className="flex h-full w-full select-none flex-col justify-end p-6 no-underline outline-none">
-                      <p className="text-sm leading-tight text-muted-foreground">
-                        Camiseta
-                      </p>
-                    </div>
-                  </NavigationMenuLink>
-                </li>
-                <li className="row-span-1">
-                  <NavigationMenuLink href="/categorias/acessorios">
-                    <div className="flex h-full w-full select-none flex-col justify-end p-6 no-underline outline-none">
-                      <p className="text-sm leading-tight text-muted-foreground">
-                        Acessórios
-                      </p>
-                    </div>
-                  </NavigationMenuLink>
-                </li>
-                <li className="row-span-1">
-                  <NavigationMenuLink href="/categorias/moletons">
-                    <div className="flex h-full w-full select-none flex-col justify-end p-6 no-underline outline-none">
-                      <p className="text-sm leading-tight text-muted-foreground">
-                        Moletons
-                      </p>
-                    </div>
-                  </NavigationMenuLink>
-                </li>
-              </ul>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-          {isAuthenticated && userRole.includes("PERFIL_ADMIN") ? (
-            <NavLink
-              to="/dashboard-admin"
-              className="cursor-pointer p-2 hover:scale-105 transition-all hover:bg-black hover:text-white"
-            >
-              Dashboard Admin
-            </NavLink>
-          ) : (
-            <>
-              <NavLink
-                to={isAuthenticated ? "/cart" : "/login"}
-                className="cursor-pointer p-2 hover:scale-105 transition-all hover:bg-black hover:text-white"
-              >
-                Carrinho
-              </NavLink>
-              <NavLink
-                to={isAuthenticated ? "/wish" : "/login"}
-                className="cursor-pointer p-2 hover:scale-105 transition-all hover:bg-black hover:text-white"
-              >
-                <Heart />
-              </NavLink>
-            </>
-          )}
-        </NavigationMenuList>
-      </NavigationMenu>
-      <div className="flex">
+        )}
+      </div>
+      <div className="flex items-center space-x-4">
+        <>
+          <NavLink
+            to={isAuthenticated ? "/cart" : "/login"}
+            className="cursor-pointer p-2 hover:text-[#D9D9D9] transition-all"
+          >
+            Carrinho
+          </NavLink>
+          <NavLink
+            to={isAuthenticated ? "/wish" : "/login"}
+            className="cursor-pointer p-2 hover:text-[#D9D9D9] transition-all"
+          >
+            <Heart />
+          </NavLink>
+        </>
         {!isAuthenticated ? (
-          <>
+          <div className="space-x-4">
             <NavLink
               to="/login"
-              className="cursor-pointer p-2 hover:scale-105 transition-all hover:bg-black hover:text-white"
+              className="cursor-pointer p-2 hover:text-[#D9D9D9] transition-all"
             >
               Login
             </NavLink>
             <NavLink
               to="/register"
-              className="cursor-pointer p-2 hover:scale-105 transition-all hover:bg-black hover:text-white"
+              className="cursor-pointer p-2 hover:text-[#D9D9D9] transition-all"
             >
               Cadastre-se
             </NavLink>
-          </>
+          </div>
         ) : (
-          <div className="flex justify-center items-center">
+          <div className="flex items-center space-x-4">
             <NavLink
               to="/profile"
-              className="cursor-pointer p-2 hover:scale-105 transition-all hover:bg-black hover:text-white"
+              className="cursor-pointer p-2 hover:text-[#D9D9D9] transition-all"
             >
               <CircleUserRound />
             </NavLink>
-            <NavLink
-              to="/"
-              className="cursor-pointer p-2 hover:scale-105 transition-all hover:bg-black hover:text-white"
+            <button
               onClick={logout}
+              className="cursor-pointer p-2 hover:text-[#FF6B6B] transition-all"
             >
               Sair
-            </NavLink>
+            </button>
           </div>
         )}
       </div>

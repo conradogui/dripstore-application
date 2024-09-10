@@ -11,6 +11,7 @@ import PrivateRoute from "./hooks/PrivateRoute.jsx";
 import DashboardAdmin from "./app/pages/DashboardAdmin.jsx";
 import { ModalProvider } from "./context/ModalContext.jsx";
 import ProductForm from "./app/pages/ProductForm.jsx";
+import CategoryProducts from "./app/pages/CategoryProducts";
 
 function App() {
   return (
@@ -27,12 +28,14 @@ function App() {
           <Route path="/wish" element={<PrivateRoute element={<WishList />} />} />
           <Route path="/dashboard-admin" element={<PrivateRoute element={<DashboardAdmin />} />} />
           <Route path="/add-product" element={<PrivateRoute element={<ProductForm />} />} />
-        </Routes>
-      </BrowserRouter>
+          <Route path="/categorias/:slug" element={<CategoryProducts />} />
+          </Routes>
+        </BrowserRouter>
       </ModalProvider>
     </AuthProvider>
   );
 }
 
 export default App;
+
 

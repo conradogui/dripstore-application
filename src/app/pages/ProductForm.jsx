@@ -28,26 +28,30 @@ const ProductForm = ({ productToEdit }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (productToEdit) {
-      updateProduct(productToEdit.id, product); 
-    } else {
-      createProduct(product); 
+    try {
+      if (productToEdit) {
+        await updateProduct(productToEdit.id, product);
+      } else {
+        await createProduct(product);
+      }
+      setProduct({
+        nome: "",
+        preco: "",
+        descricao: "",
+        desconto: "",
+        ativo: false,
+        categoria: "",
+      });
+      closeModal();
+    } catch (error) {
+      console.error("Erro ao salvar o produto:", error);
     }
-    setProduct({
-      nome: "",
-      preco: "",
-      descricao: "",
-      desconto: "",
-      ativo: false,
-      categoria: "",
-    });
-    closeModal()
   };
 
   return (
-    <div className="bg-white p-8 rounded-lg rounded-t-none shadow-lg w-full max-w-lg relative">
+    <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
       <h2 className="text-2xl font-semibold text-gray-800 mb-6">
         {productToEdit ? "Editar Produto" : "Adicionar Produto"}
       </h2>
@@ -58,8 +62,6 @@ const ProductForm = ({ productToEdit }) => {
           </label>
           <input
             type="text"
-            id="nome"
-            name="nome"
             value={product.nome}
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-200"
@@ -73,8 +75,6 @@ const ProductForm = ({ productToEdit }) => {
           </label>
           <input
             type="number"
-            id="preco"
-            name="preco"
             value={product.preco}
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-200"
@@ -83,12 +83,10 @@ const ProductForm = ({ productToEdit }) => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-700 mb-2" >
+          <label className="block text-gray-700 mb-2">
             Descrição
           </label>
           <textarea
-            id="descricao"
-            name="descricao"
             value={product.descricao}
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-200"
@@ -97,29 +95,23 @@ const ProductForm = ({ productToEdit }) => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-700 mb-2" >
+          <label className="block text-gray-700 mb-2">
             Desconto (%)
           </label>
           <input
             type="number"
-            id="desconto"
-            name="desconto"
             value={product.desconto}
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-200"
             required
-            min="0"
-            max="100"
           />
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-700 mb-2" >
+          <label className="block text-gray-700 mb-2">
             Categoria
           </label>
           <select
-            id="categoria"
-            name="categoria"
             value={product.categoria}
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-200"
@@ -127,7 +119,7 @@ const ProductForm = ({ productToEdit }) => {
           >
             <option value="">Selecione uma categoria</option>
             <option value="Calça">Calça</option>
-            <option value="Tenis">Tênis</option>
+            <option value="Tênis">Tênis</option>
             <option value="Short">Short</option>
             <option value="Camisa">Camisa</option>
             <option value="Camiseta">Camiseta</option>
@@ -140,7 +132,6 @@ const ProductForm = ({ productToEdit }) => {
           <label className="inline-flex items-center text-gray-700">
             <input
               type="checkbox"
-              name="ativo"
               checked={product.ativo}
               onChange={handleChange}
               className="form-checkbox h-5 w-5 text-indigo-600"
