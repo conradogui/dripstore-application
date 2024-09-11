@@ -6,7 +6,7 @@ const Cart = () => {
   const { cartItems, removeFromCart, isAuthenticated } = useAuth();
 
   const calculateSubtotal = () => {
-    return cartItems.reduce((total, item) => total + item.preco * item.quantity, 0);
+    return cartItems.reduce((total, item) => total + item.preco * item.quantidade, 0);
   };
   
   return (
@@ -22,7 +22,7 @@ const Cart = () => {
                 <div>
                   <h2 className="text-lg font-semibold text-[#3C6E71]">{item.nome}</h2>
                   <p className="text-gray-600">Preço: ${item.preco}</p>
-                  <p className="text-gray-600">Quantidade: {item.quantity}</p>
+                  <p className="text-gray-600">Quantidade: {item.quantidade}</p>
                 </div>
                 <button
                   onClick={() => removeFromCart(item.id)}

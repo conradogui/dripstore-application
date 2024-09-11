@@ -21,24 +21,26 @@ export function AuthProvider({ children }) {
       setIsAuthenticated(true);
       setUserId(storedUserId);
       setUserRole(storedRoles);
-    } else {
-      setIsAuthenticated(false);
-      setUserRole(null);
-      setUserId(null);
+      
+      axios
+        .get("https://dripstore-api-y1ak.onrender.com/api/produto")
+        .then((response) => setProduto(response.data))
+        .catch((error) => console.error("Erro ao buscar produtos:", error));
+      if (storedRoles.includes("PERFIL_ADMIN")) {
+        axios
+          .get("http://localhost:5000/api/usuario", {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+          .then((response) => setUsers(response.data))
+          .catch((error) => console.error("Erro ao buscar usuários:", error));
+      }
+      axios
+        .get(`http://localhost:5000/api/carrinho`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response) => setCartItems(response.data))
+        .catch((error) => console.error("Erro ao buscar itens do carrinho:", error));
     }
-    axios
-      .get("https://dripstore-api-y1ak.onrender.com/api/produto")
-      .then((response) => setProduto(response.data))
-      .catch((error) => console.error("Erro ao buscar produtos:", error));
-
-    axios
-    .get("http://localhost:5000/api/usuario", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((response) => setUsers(response.data))
-    .catch((error) => console.error("Erro ao buscar usuários:", error));
   }, []);
 
   function login(token, id, roles) {
@@ -97,11 +99,25 @@ export function AuthProvider({ children }) {
   }
 
   function addToCart(item) {
-    setCartItems((prevItems) => [...prevItems, item]);
+    axios
+      .post("http://localhost:5000/api/carrinho", item, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      })
+      .then(() => {
+        setCartItems((prevItems) => [...prevItems, item]);
+      })
+      .catch((error) => console.error("Erro ao adicionar item ao carrinho:", error));
   }
 
-  function removeFromCart(id) {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  function removeFromCart(produtoId) {
+    axios
+      .delete(`http://localhost:5000/api/carrinho/${produtoId}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      })
+      .then(() => {
+        setCartItems((prevItems) => prevItems.filter((item) => item.produtoId !== produtoId));
+      })
+      .catch((error) => console.error("Erro ao remover item do carrinho:", error));
   }
 
   function addToWishList(item) {

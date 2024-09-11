@@ -108,7 +108,7 @@ const Home = () => {
                   </span>
                 </p>
                 <button
-                  onClick={() => addToCart({ ...item, quantity: 1 })}
+                  onClick={() => addToCart({ ...item, quantidade: 1 })}
                   className="mt-4 px-4 py-2 font-semibold text-white bg-[#284B63] rounded-lg hover:bg-[#353535]"
                 >
                   Adicionar ao Carrinho
