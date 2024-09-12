@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useNavigate, NavLink } from "react-router-dom";
+import { useAuth } from "../context/AuthContext.jsx";
 import model2 from "../assets/img/model2.jpg";
 import logo from "../assets/img/logog.png";
-import { NavLink } from "react-router-dom";
-import { useAuth } from "../context/AuthContext.jsx";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { isAuthenticated, login } = useAuth();
+  const { isAuthenticated, handleLogin } = useAuth();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -21,19 +19,11 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/signin",
-        { email, senha }
-      );
-      const { token, id, perfis } = response.data;
-      login(token, id, perfis);
+    const { success, message } = await handleLogin(email, senha);
+    if (success) {
       navigate("/");
-    } catch (err) {
-      setError(
-        err.response?.data?.message ||
-          "Ocorreu um erro, verifique seu email e senha!"
-      );
+    } else {
+      setError(message || "Ocorreu um erro ao fazer login.");
     }
   };
 

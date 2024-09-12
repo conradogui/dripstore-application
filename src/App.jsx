@@ -23,10 +23,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/cart" element={<PrivateRoute element={<Cart />} />} />
-          <Route path="/profile" element={<PrivateRoute element={<Profile />} />} />
-          <Route path="/wish" element={<PrivateRoute element={<WishList />} />} />
-          <Route path="/dashboard-admin" element={<PrivateRoute element={<DashboardAdmin />} />} />
+          <Route path="/home/cart" element={<PrivateRoute element={<Cart />} />} />
+          <Route path="/home/profile" element={<PrivateRoute element={<Profile />} />} />
+          <Route path="/home/wish" element={<PrivateRoute element={<WishList />} />} />
+          <Route path="/home/dashboard-admin" element={<PrivateRoute element={<DashboardAdmin />} />} />
           <Route path="/add-product" element={<PrivateRoute element={<ProductForm />} />} />
           <Route path="/categorias/:slug" element={<CategoryProducts />} />
           </Routes>

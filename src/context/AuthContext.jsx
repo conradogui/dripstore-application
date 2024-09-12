@@ -43,13 +43,26 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
-  function login(token, id, roles) {
-    localStorage.setItem("token", token);
-    localStorage.setItem("userId", id);
-    localStorage.setItem("roles", JSON.stringify(roles));
-    setIsAuthenticated(true);
-    setUserId(id);
-    setUserRole(roles);
+  async function handleLogin(email, senha) {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/signin",
+        { email, senha }
+      );
+      const { token, id, perfis } = response.data;
+      localStorage.setItem("token", token);
+      localStorage.setItem("userId", id);
+      localStorage.setItem("roles", JSON.stringify(perfis));
+      setIsAuthenticated(true);
+      setUserId(id);
+      setUserRole(perfis);
+      return { success: true };
+    } catch (err) {
+      console.log(
+        err.response?.data?.message || "Ocorreu um erro, verifique seu email e senha"
+      );
+      return { success: false, message: err.response?.data?.message };
+    }
   }
 
   function logout() {
@@ -134,7 +147,7 @@ export function AuthProvider({ children }) {
         isAuthenticated,
         userId,
         userRole,
-        login,
+        handleLogin,
         logout,
         cartItems,
         addToCart,

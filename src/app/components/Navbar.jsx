@@ -62,7 +62,7 @@ const Navbar = () => {
         </NavigationMenu>
         {isAuthenticated && userRole.includes("PERFIL_ADMIN") && (
           <NavLink
-            to="/dashboard-admin"
+            to="/home/dashboard-admin"
             className="cursor-pointer p-2 hover:text-[#D9D9D9] transition-all"
           >
             Dashboard Admin
@@ -72,13 +72,13 @@ const Navbar = () => {
       <div className="flex items-center space-x-4">
         <>
           <NavLink
-            to={isAuthenticated ? "/cart" : "/login"}
+            to={isAuthenticated ? "/home/cart" : "/login"}
             className="cursor-pointer p-2 hover:text-[#D9D9D9] transition-all"
           >
             Carrinho
           </NavLink>
           <NavLink
-            to={isAuthenticated ? "/wish" : "/login"}
+            to={isAuthenticated ? "/home/wish" : "/login"}
             className="cursor-pointer p-2 hover:text-[#D9D9D9] transition-all"
           >
             <Heart />
@@ -102,7 +102,7 @@ const Navbar = () => {
         ) : (
           <div className="flex items-center space-x-4">
             <NavLink
-              to="/profile"
+              to="/home/profile"
               className="cursor-pointer p-2 hover:text-[#D9D9D9] transition-all"
             >
               <CircleUserRound />
