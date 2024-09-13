@@ -62,6 +62,7 @@ const ProductForm = ({ productToEdit }) => {
           </label>
           <input
             type="text"
+            name="nome"
             value={product.nome}
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-200"
@@ -75,6 +76,7 @@ const ProductForm = ({ productToEdit }) => {
           </label>
           <input
             type="number"
+            name="preco"
             value={product.preco}
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-200"
@@ -88,6 +90,7 @@ const ProductForm = ({ productToEdit }) => {
           </label>
           <textarea
             value={product.descricao}
+            name="descricao"
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-200"
             required
@@ -100,6 +103,7 @@ const ProductForm = ({ productToEdit }) => {
           </label>
           <input
             type="number"
+            name="desconto"
             value={product.desconto}
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-200"
@@ -113,6 +117,7 @@ const ProductForm = ({ productToEdit }) => {
           </label>
           <select
             value={product.categoria}
+            name="categoria"
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-200"
             required
@@ -132,6 +137,7 @@ const ProductForm = ({ productToEdit }) => {
           <label className="inline-flex items-center text-gray-700">
             <input
               type="checkbox"
+              name="ativo"
               checked={product.ativo}
               onChange={handleChange}
               className="form-checkbox h-5 w-5 text-indigo-600"

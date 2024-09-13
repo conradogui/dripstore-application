@@ -1,4 +1,3 @@
-// components/Modal.jsx
 import React from "react";
 import ReactDOM from "react-dom";
 import { useModal } from "../../context/ModalContext.jsx";

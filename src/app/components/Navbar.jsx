@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { Heart, CircleUserRound } from "lucide-react";
 import { useAuth } from "../../context/AuthContext.jsx";
+import { Link } from "react-router-dom";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -15,16 +16,16 @@ const Navbar = () => {
 
   return (
     <nav className="flex justify-between items-center px-4 py-3 bg-[#353535] text-white shadow-lg w-full">
-      <NavLink
-        to="/"
+      <Link
+        to={isAuthenticated ? "/home" : "/"}
         className="flex items-center text-3xl font-bold transition-transform transform hover:scale-110"
       >
         <span className="text-white">GC</span>
         <span className="text-[#284B63] ml-2">STORE</span>
-      </NavLink>
+      </Link>
       <div className="hidden md:flex space-x-8">
         <NavLink
-          to="/"
+          to={isAuthenticated ? "/home" : "/"}
           className="cursor-pointer p-2 hover:text-[#D9D9D9] transition-all"
         >
           Home
@@ -61,52 +62,52 @@ const Navbar = () => {
           </NavigationMenuList>
         </NavigationMenu>
         {isAuthenticated && userRole.includes("PERFIL_ADMIN") && (
-          <NavLink
+          <Link
             to="/home/dashboard-admin"
             className="cursor-pointer p-2 hover:text-[#D9D9D9] transition-all"
           >
             Dashboard Admin
-          </NavLink>
+          </Link>
         )}
       </div>
       <div className="flex items-center space-x-4">
         <>
-          <NavLink
+          <Link
             to={isAuthenticated ? "/home/cart" : "/login"}
             className="cursor-pointer p-2 hover:text-[#D9D9D9] transition-all"
           >
             Carrinho
-          </NavLink>
-          <NavLink
+          </Link>
+          <Link
             to={isAuthenticated ? "/home/wish" : "/login"}
             className="cursor-pointer p-2 hover:text-[#D9D9D9] transition-all"
           >
             <Heart />
-          </NavLink>
+          </Link>
         </>
         {!isAuthenticated ? (
           <div className="space-x-4">
-            <NavLink
+            <Link
               to="/login"
               className="cursor-pointer p-2 hover:text-[#D9D9D9] transition-all"
             >
               Login
-            </NavLink>
-            <NavLink
+            </Link>
+            <Link
               to="/register"
               className="cursor-pointer p-2 hover:text-[#D9D9D9] transition-all"
             >
               Cadastre-se
-            </NavLink>
+            </Link>
           </div>
         ) : (
           <div className="flex items-center space-x-4">
-            <NavLink
+            <Link
               to="/home/profile"
               className="cursor-pointer p-2 hover:text-[#D9D9D9] transition-all"
             >
               <CircleUserRound />
-            </NavLink>
+            </Link>
             <button
               onClick={logout}
               className="cursor-pointer p-2 hover:text-[#FF6B6B] transition-all"

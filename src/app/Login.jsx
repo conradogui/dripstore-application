@@ -13,7 +13,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/");
+      navigate("/home");
     }
   }, [isAuthenticated, navigate]);
 
@@ -21,7 +21,7 @@ const Login = () => {
     e.preventDefault();
     const { success, message } = await handleLogin(email, senha);
     if (success) {
-      navigate("/");
+      navigate("/home");
     } else {
       setError(message || "Ocorreu um erro ao fazer login.");
     }
