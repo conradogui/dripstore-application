@@ -35,7 +35,7 @@ export function AuthProvider({ children }) {
           .catch((error) => console.error("Erro ao buscar usuários:", error));
       }
       axios
-        .get(`http://localhost:5000/api/carrinho`, {
+        .get("http://localhost:5000/api/carrinho", {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => setCartItems(response.data))
@@ -100,9 +100,13 @@ export function AuthProvider({ children }) {
       });
   }
 
-  function createProduct(productData) {
+  function createProduct(newProduct) {
     axios
-      .post("https://dripstore-api-y1ak.onrender.com/api/produto", productData)
+      .post("https://dripstore-api-y1ak.onrender.com/api/produto", newProduct, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        }
+      })
       .then((response) => {
         setProduto((prevProducts) => [...prevProducts, response.data]);
       })

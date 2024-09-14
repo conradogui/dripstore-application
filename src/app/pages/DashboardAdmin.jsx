@@ -5,8 +5,8 @@ import Modal from "../components/Modal.jsx";
 import ProductForm from "./ProductForm.jsx";
 
 const DashboardAdmin = () => {
-  const { users, produto, deleteProduct, updateProduct, createProduct } = useAuth();
-  const { openModal, closeModal } = useModal();
+  const { users, produto, deleteProduct } = useAuth();
+  const { openModal } = useModal();
   const [productToEdit, setProductToEdit] = useState(null);
 
   const handleDelete = (id) => {
@@ -15,16 +15,6 @@ const DashboardAdmin = () => {
   const handleOpenModal = (product = null) => {
     setProductToEdit(product);
     openModal();
-  };
-
-  const handleSubmit = (product) => {
-    if (productToEdit) {
-      updateProduct(productToEdit.id, product);
-    } else {
-      createProduct(product);
-    }
-    closeModal();
-    setProductToEdit(null);
   };
 
   return (
@@ -64,20 +54,19 @@ const DashboardAdmin = () => {
         {produto.length === 0 ? (
           <p>Nenhum produto encontrado.</p>
         ) : (
-          <table className="min-w-full bg-white border border-gray-300">
-            <thead>
-              <tr>
-                <th className="py-2 border-b">Nome</th>
-                <th className="py-2 border-b">Preço</th>
-                <th className="py-2 border-b">Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {produto.map(product => (
-                <tr key={product.id}>
-                  <td className="border px-4 py-2">{product.nome}</td>
-                  <td className="border px-4 py-2">${product.preco}</td>
-                  <td className="border px-4 py-2">
+          <ul className="bg-white border border-gray-300">
+            {produto.map((product, index) => (
+              <li key={index} className="border px-4 py-2 mb-2">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <p>
+                      <strong>Nome:</strong> {product.nome}
+                    </p>
+                    <p>
+                      <strong>Preço:</strong> ${product.preco}
+                    </p>
+                  </div>
+                  <div>
                     <button
                       onClick={() => handleOpenModal(product)}
                       className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
@@ -90,11 +79,11 @@ const DashboardAdmin = () => {
                     >
                       Deletar
                     </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
         )}
       </section>
 
@@ -108,7 +97,7 @@ const DashboardAdmin = () => {
             Adicionar Novo Produto
           </button>
           <Modal>
-            <ProductForm productToEdit={productToEdit} onSubmit={handleSubmit} />
+            <ProductForm productToEdit={productToEdit} />
           </Modal>
           <button className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-700">
             Visualizar Relatórios de Vendas
@@ -120,4 +109,3 @@ const DashboardAdmin = () => {
 };
 
 export default DashboardAdmin;
-
