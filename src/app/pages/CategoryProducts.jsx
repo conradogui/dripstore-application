@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext.jsx";
+import { useAuth } from "../../hooks/useAuth.jsx";
+import { useProducts } from "../../hooks/useProducts.jsx";
 
 const CategoryProducts = () => {
   const { slug } = useParams();
-  const { produto } = useAuth();
+  const { produto } = useProducts();
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {

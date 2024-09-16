@@ -1,13 +1,20 @@
-import React, { useState } from "react";
-import { useAuth } from "../../context/AuthContext.jsx";
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../../hooks/useAuth.jsx";
 import { useModal } from "../../context/ModalContext.jsx";
+import { useProducts } from "../../hooks/useProducts.jsx";
+import { useUsers } from "../../hooks/useUsers.jsx";
 import Modal from "../components/Modal.jsx";
 import ProductForm from "./ProductForm.jsx";
 
 const DashboardAdmin = () => {
-  const { users, produto, deleteProduct } = useAuth();
+  const { users } = useUsers();
+  const { produto, deleteProduct } = useProducts();
   const { openModal } = useModal();
   const [productToEdit, setProductToEdit] = useState(null);
+
+  useEffect(() => {
+    console.log('Produtos atuais:', produto);
+  }, [produto]);
 
   const handleDelete = (id) => {
     deleteProduct(id);
@@ -16,6 +23,7 @@ const DashboardAdmin = () => {
     setProductToEdit(product);
     openModal();
   };
+  console.log(produto)
 
   return (
     <div className="container mx-auto px-4 py-8">

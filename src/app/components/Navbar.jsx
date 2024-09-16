@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { Heart, CircleUserRound } from "lucide-react";
-import { useAuth } from "../../context/AuthContext.jsx";
+import { useAuth } from "../../hooks/useAuth.jsx";
 import { Link } from "react-router-dom";
 import {
   NavigationMenu,

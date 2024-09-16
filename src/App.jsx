@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider, useAuth } from "./context/AuthContext";
+import { useAuth } from "./hooks/useAuth.jsx";
+import { AuthProvider } from "./context/AuthContext.jsx";
 import Home from "./app/Home";
 import Login from "./app/Login";
 import Register from "./app/Register";
@@ -14,7 +15,6 @@ import CategoryProducts from "./app/pages/CategoryProducts";
 import { useState } from "react";
 
 function App() {
-  const [user, setUser] = useState(undefined);
   const { isAuthenticated } = useAuth();
 
   return (

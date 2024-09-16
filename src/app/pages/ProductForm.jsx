@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useAuth } from "../../context/AuthContext.jsx";
+import { useAuth } from "../../hooks/useAuth.jsx";
 import { useModal } from "../../context/ModalContext.jsx";
+import { useProducts } from "../../hooks/useProducts.jsx";
 
 const ProductForm = ({ productToEdit }) => {
-  const { createProduct, updateProduct } = useAuth();
+  const { createProduct, updateProduct } = useProducts();
   const { closeModal } = useModal();
   const [product, setProduct] = useState({
     nome: "",
@@ -32,10 +33,10 @@ const ProductForm = ({ productToEdit }) => {
     e.preventDefault();
     try {
       if (productToEdit) {
-        await updateProduct(productToEdit.id, product);
-      } else {
-        await createProduct(product);
+        updateProduct(productToEdit.id, product);
       }
+      createProduct(product);
+
       setProduct({
         nome: "",
         preco: "",
@@ -45,6 +46,7 @@ const ProductForm = ({ productToEdit }) => {
         categoria: "",
       });
       closeModal();
+      console.log(product);
     } catch (error) {
       console.error("Erro ao salvar o produto:", error);
     }

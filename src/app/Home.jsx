@@ -12,7 +12,7 @@ import acessorios from "../assets/img/acessorios.jpg";
 import moletom from "../assets/img/moletom.jpg";
 import Navbar from "./components/Navbar.jsx";
 import { NavLink } from "react-router-dom";
-import { useAuth } from "../context/AuthContext.jsx";
+import { useAuth } from "../hooks/useAuth.jsx";
 import {
   Carousel,
   CarouselContent,
@@ -21,9 +21,12 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
+import { useCart } from "../hooks/useCart.jsx";
+import { useProducts } from "../hooks/useProducts.jsx";
 
 const Home = () => {
-  const { produto, addToCart, addToWishList } = useAuth();
+  const { produto } = useProducts();
+  const { addToCart} = useCart
 
   return (
     <div className="relative font-sans text-gray-800">

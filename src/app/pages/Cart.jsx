@@ -1,9 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext.jsx";
+import { useAuth } from "../../hooks/useAuth.jsx";
+import { useCart } from "../../hooks/useCart.jsx";
 
 const Cart = () => {
-  const { cartItems, removeFromCart, isAuthenticated } = useAuth();
+  const { cartItems, removeFromCart } = useCart();
 
   const calculateSubtotal = () => {
     return cartItems.reduce((total, item) => total + item.preco * item.quantidade, 0);

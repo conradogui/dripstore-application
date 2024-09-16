@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
-import { useAuth } from "../context/AuthContext.jsx";
+import { useAuth } from "../hooks/useAuth.jsx";
 import model2 from "../assets/img/model2.jpg";
 import logo from "../assets/img/logog.png";
 
