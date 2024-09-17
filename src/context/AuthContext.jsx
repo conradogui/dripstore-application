@@ -9,7 +9,7 @@ const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const auth = useAuth();
-  const products = useProducts();
+  const produto = useProducts();
   const cart = useCart();
   const wishList = useWishList();
   const users = useUsers();
@@ -18,7 +18,7 @@ export function AuthProvider({ children }) {
     <AuthContext.Provider
       value={{
         ...auth,
-        ...products,
+        ...produto,
         ...cart,
         ...wishList,
         ...users,

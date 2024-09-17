@@ -18,11 +18,7 @@ export function useProducts() {
   const createProduct = (newProduct) => {
     console.log('Criando produto:', newProduct);
     axios
-      .post("https://dripstore-api-y1ak.onrender.com/api/produto", newProduct, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
+      .post("https://dripstore-api-y1ak.onrender.com/api/produto", newProduct)
       .then(() => {
         fetchProducts(); 
       })

@@ -18,6 +18,15 @@ const ProductForm = ({ productToEdit }) => {
   useEffect(() => {
     if (productToEdit) {
       setProduct(productToEdit);
+    } else {
+      setProduct({
+        nome: "",
+        preco: "",
+        descricao: "",
+        desconto: "",
+        ativo: false,
+        categoria: "",
+      });
     }
   }, [productToEdit]);
 
@@ -29,14 +38,15 @@ const ProductForm = ({ productToEdit }) => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     try {
       if (productToEdit) {
         updateProduct(productToEdit.id, product);
+      } else {
+        createProduct(product);
       }
-      createProduct(product);
-
+      closeModal();
       setProduct({
         nome: "",
         preco: "",
@@ -45,8 +55,8 @@ const ProductForm = ({ productToEdit }) => {
         ativo: false,
         categoria: "",
       });
-      closeModal();
-      console.log(product);
+
+      console.log("esses sao", product);
     } catch (error) {
       console.error("Erro ao salvar o produto:", error);
     }
@@ -59,9 +69,7 @@ const ProductForm = ({ productToEdit }) => {
       </h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label className="block text-gray-700 mb-2">
-            Nome do Produto
-          </label>
+          <label className="block text-gray-700 mb-2">Nome do Produto</label>
           <input
             type="text"
             name="nome"
@@ -73,9 +81,7 @@ const ProductForm = ({ productToEdit }) => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-700 mb-2">
-            Preço
-          </label>
+          <label className="block text-gray-700 mb-2">Preço</label>
           <input
             type="number"
             name="preco"
@@ -87,9 +93,7 @@ const ProductForm = ({ productToEdit }) => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-700 mb-2">
-            Descrição
-          </label>
+          <label className="block text-gray-700 mb-2">Descrição</label>
           <textarea
             value={product.descricao}
             name="descricao"
@@ -100,9 +104,7 @@ const ProductForm = ({ productToEdit }) => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-700 mb-2">
-            Desconto (%)
-          </label>
+          <label className="block text-gray-700 mb-2">Desconto (%)</label>
           <input
             type="number"
             name="desconto"
@@ -114,9 +116,7 @@ const ProductForm = ({ productToEdit }) => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-700 mb-2">
-            Categoria
-          </label>
+          <label className="block text-gray-700 mb-2">Categoria</label>
           <select
             value={product.categoria}
             name="categoria"
@@ -160,4 +160,3 @@ const ProductForm = ({ productToEdit }) => {
 };
 
 export default ProductForm;
-

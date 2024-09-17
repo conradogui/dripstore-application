@@ -16,9 +16,10 @@ import { useState } from "react";
 
 function App() {
   const { isAuthenticated } = useAuth();
+  const [product, setProduct] = useState([])
 
   return (
-    <AuthProvider>
+    <AuthProvider value={{product, setProduct}}>
       <ModalProvider>
         <BrowserRouter>
           <Navbar />
@@ -26,12 +27,30 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/home" element={isAuthenticated ? <Home/> : <Login/>} />
-            <Route path="/home/cart" element={isAuthenticated ? <Cart/> : <Login/>} />
-            <Route path="/home/profile" element={isAuthenticated ? <Profile/> : <Login/>} />
-            <Route path="/home/wish" element={isAuthenticated ? <WishList/> : <Login/>}/>
-            <Route path="/home/dashboard-admin" element={isAuthenticated ? <DashboardAdmin/> : <Login/>} />
-            <Route path="/add-product" element={isAuthenticated ? <ProductForm/> : <Login/>} />
+            <Route
+              path="/home"
+              element={isAuthenticated ? <Home /> : <Login />}
+            />
+            <Route
+              path="/home/cart"
+              element={isAuthenticated ? <Cart /> : <Login />}
+            />
+            <Route
+              path="/home/profile"
+              element={isAuthenticated ? <Profile /> : <Login />}
+            />
+            <Route
+              path="/home/wish"
+              element={isAuthenticated ? <WishList /> : <Login />}
+            />
+            <Route
+              path="/home/dashboard-admin"
+              element={isAuthenticated ? <DashboardAdmin /> : <Login />}
+            />
+            <Route
+              path="/add-product"
+              element={isAuthenticated ? <ProductForm /> : <Login />}
+            />
             <Route path="/categorias/:slug" element={<CategoryProducts />} />
           </Routes>
         </BrowserRouter>
@@ -41,5 +60,3 @@ function App() {
 }
 
 export default App;
-
-

@@ -63,8 +63,8 @@ const DashboardAdmin = () => {
           <p>Nenhum produto encontrado.</p>
         ) : (
           <ul className="bg-white border border-gray-300">
-            {produto.map((product, index) => (
-              <li key={index} className="border px-4 py-2 mb-2">
+            {produto.map((product) => (
+              <li key={product.id} className="border px-4 py-2 mb-2">
                 <div className="flex justify-between items-center">
                   <div>
                     <p>
@@ -99,13 +99,13 @@ const DashboardAdmin = () => {
         <h2 className="text-2xl font-semibold mb-4">Outras Funções</h2>
         <div className="flex flex-col space-y-4">
           <button
-            onClick={() => handleOpenModal(null)}
+            onClick={() => handleOpenModal()}
             className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700 mb-4"
           >
             Adicionar Novo Produto
           </button>
           <Modal>
-            <ProductForm productToEdit={productToEdit} />
+            <ProductForm productToEdit={productToEdit} product={produto}/>
           </Modal>
           <button className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-700">
             Visualizar Relatórios de Vendas
