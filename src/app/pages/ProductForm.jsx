@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useAuth } from "../../hooks/useAuth.jsx";
 import { useModal } from "../../context/ModalContext.jsx";
 import { useProducts } from "../../hooks/useProducts.jsx";
 
-const ProductForm = ({ productToEdit }) => {
-  const { createProduct, updateProduct } = useProducts();
+const ProductForm = ({ productToEdit, onProductChange }) => {
   const { closeModal } = useModal();
   const [product, setProduct] = useState({
     nome: "",
@@ -38,28 +36,17 @@ const ProductForm = ({ productToEdit }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      if (productToEdit) {
-        updateProduct(productToEdit.id, product);
-      } else {
-        createProduct(product);
-      }
-      closeModal();
-      setProduct({
-        nome: "",
-        preco: "",
-        descricao: "",
-        desconto: "",
-        ativo: false,
-        categoria: "",
-      });
-
-      console.log("esses sao", product);
-    } catch (error) {
-      console.error("Erro ao salvar o produto:", error);
-    }
+    await onProductChange(product, Boolean(productToEdit));
+    setProduct({
+      nome: "",
+      preco: "",
+      descricao: "",
+      desconto: "",
+      ativo: false,
+      categoria: "",
+    });
   };
 
   return (

@@ -8,13 +8,15 @@ import ProductForm from "./ProductForm.jsx";
 
 const DashboardAdmin = () => {
   const { users } = useUsers();
-  const { produto, deleteProduct } = useProducts();
-  const { openModal } = useModal();
+  const {
+    produto,
+    deleteProduct,
+    createProduct,
+    fetchProducts,
+    updateProduct,
+  } = useProducts();
+  const { openModal, closeModal } = useModal();
   const [productToEdit, setProductToEdit] = useState(null);
-
-  useEffect(() => {
-    console.log('Produtos atuais:', produto);
-  }, [produto]);
 
   const handleDelete = (id) => {
     deleteProduct(id);
@@ -23,7 +25,17 @@ const DashboardAdmin = () => {
     setProductToEdit(product);
     openModal();
   };
-  console.log(produto)
+
+  const handleProductChange = async (product, isEdit) => {
+    if (isEdit) {
+      await updateProduct(productToEdit.id, product);
+    } else {
+      await createProduct(product);
+    }
+    fetchProducts();
+    closeModal();
+    setProductToEdit(null);
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -105,7 +117,10 @@ const DashboardAdmin = () => {
             Adicionar Novo Produto
           </button>
           <Modal>
-            <ProductForm productToEdit={productToEdit} product={produto}/>
+            <ProductForm
+              productToEdit={productToEdit}
+              onProductChange={handleProductChange}
+            />
           </Modal>
           <button className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-700">
             Visualizar Relatórios de Vendas
