@@ -7,8 +7,9 @@ const Cart = () => {
   const { cartItems, removeFromCart } = useCart();
 
   const calculateSubtotal = () => {
-    return cartItems.reduce((total, item) => total + item.preco * item.quantidade, 0);
+    return cartItems.reduce((total, item) => total + item.produto.preco * (1 - item.produto.desconto / 100).toFixed(2) * item.quantidade, 0);
   };
+  console.log(cartItems)
   
   return (
     <div className="container mx-auto px-4 py-8">
@@ -21,8 +22,8 @@ const Cart = () => {
             {cartItems.map(item => (
               <li key={item.id} className="flex items-center justify-between p-4 border-b border-[#D9D9D9]">
                 <div>
-                  <h2 className="text-lg font-semibold text-[#3C6E71]">{item.nome}</h2>
-                  <p className="text-gray-600">Preço: ${item.preco}</p>
+                  <h2 className="text-lg font-semibold text-[#3C6E71]">{item.produto.nome}</h2>
+                  <p className="text-gray-600">Preço: ${(item.produto.preco * (1 - item.produto.desconto / 100)).toFixed(2)}</p>
                   <p className="text-gray-600">Quantidade: {item.quantidade}</p>
                 </div>
                 <button

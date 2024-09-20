@@ -26,7 +26,7 @@ import { useProducts } from "../hooks/useProducts.jsx";
 
 const Home = () => {
   const { produto } = useProducts();
-  const { addToCart} = useCart
+  const { addToCart } = useCart();
 
   return (
     <div className="relative font-sans text-gray-800">
@@ -43,76 +43,52 @@ const Home = () => {
           className="justify-center block"
         >
           <CarouselContent>
-            <CarouselItem>
-              <div className="relative w-full h-[calc(100vh-80px)] sm:h-[calc(70vh-80px)] items-center grayscale opacity-95">
-                <div className="absolute bottom-8 left-8 text-white p-4 bg-[#353535] bg-opacity-50 rounded">
-                  <p className="text-xl font-bold">Texto</p>
-                  <Link to="/explore" className="text-sm underline">
-                    Saiba mais
-                  </Link>
+            {[model1, model2, model3].map((model, index) => (
+              <CarouselItem key={index}>
+                <div className="relative w-full h-[calc(100vh-80px)] sm:h-[calc(70vh-80px)] items-center grayscale opacity-95">
+                  <img
+                    src={model}
+                    alt={`modelo${index + 1}`}
+                    className="w-full h-full object-cover brightness-75"
+                  />
+                  <div className="absolute bottom-16 left-8 text-white p-6 bg-black bg-opacity-60 rounded-lg">
+                    <h2 className="text-2xl font-bold">Novidades Incríveis</h2>
+                    <Link to="/explore" className="text-sm underline">
+                      Descubra mais
+                    </Link>
+                  </div>
                 </div>
-                <img
-                  src={model1}
-                  alt="modelo1"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </CarouselItem>
-            <CarouselItem>
-              <div className="relative w-full h-[calc(100vh-80px)] sm:h-[calc(70vh-80px)] items-center grayscale opacity-95">
-                <div className="absolute bottom-8 left-8 text-white p-4 bg-[#353535] bg-opacity-50 rounded">
-                  <p className="text-xl font-bold">Texto</p>
-                  <Link to="/explore" className="text-sm underline">
-                    Saiba mais
-                  </Link>
-                </div>
-                <img
-                  src={model2}
-                  alt="modelo2"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </CarouselItem>
-            <CarouselItem>
-              <div className="relative w-full h-[calc(100vh-80px)] sm:h-[calc(70vh-80px)] items-center grayscale opacity-95">
-                <div className="absolute bottom-8 left-8 text-white p-4 bg-[#353535] bg-opacity-50 rounded">
-                  <p className="text-xl font-bold">Texto</p>
-                  <Link to="/explore" className="text-sm underline">
-                    Saiba mais
-                  </Link>
-                </div>
-                <img
-                  src={model3}
-                  alt="modelo3"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </CarouselItem>
+              </CarouselItem>
+            ))}
           </CarouselContent>
         </Carousel>
       </div>
-      <div className="mt-12 px-4 sm:px-8 md:px-16 bg-[#3C6E71] text-white py-12">
-        <h3 className="text-2xl font-semibold text-center mb-8">Vendas Flash</h3>
-        <p className="text-center mb-4">Descontos incríveis por tempo limitado!</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+      <div className="mt-12 px-4 sm:px-8 md:px-16 bg-[#2A4B54] text-white py-12 rounded-lg shadow-md">
+        <h3 className="text-3xl font-bold text-center mb-6">Vendas Flash</h3>
+        <p className="text-center mb-8 opacity-80">
+          Descontos incríveis por tempo limitado!
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {produto
-            .filter((item) => item.desconto > 0)
+            .filter((item) => item.desconto >= 50)
             .map((item) => (
               <div
                 key={item.id}
-                className="bg-white text-gray-800 shadow-lg p-6 rounded-lg hover:shadow-xl transition-shadow"
+                className="bg-white text-gray-800 shadow-md p-4 rounded-lg transition-transform transform hover:scale-105 -rotate-3"
               >
                 <h4 className="text-lg font-semibold mb-2">{item.nome}</h4>
-                <p className="text-gray-600">{item.descricao}</p>
-                <p className="text-gray-800 font-semibold">
-                  <span className="line-through">${item.preco}</span>{" "}
-                  <span className="text-red-500">
+                <p className="text-gray-500">{item.descricao}</p>
+                <p className="text-gray-800 font-bold">
+                  <span className="line-through text-gray-400">
+                    ${item.preco}
+                  </span>{" "}
+                  <span className="text-red-600">
                     ${(item.preco * (1 - item.desconto / 100)).toFixed(2)}
                   </span>
                 </p>
                 <button
                   onClick={() => addToCart({ ...item, quantidade: 1 })}
-                  className="mt-4 px-4 py-2 font-semibold text-white bg-[#284B63] rounded-lg hover:bg-[#353535]"
+                  className="mt-4 w-full py-2 font-bold text-white bg-[#1D3A34] rounded-lg hover:bg-[#274B4D] transition-colors"
                 >
                   Adicionar ao Carrinho
                 </button>
@@ -120,9 +96,11 @@ const Home = () => {
             ))}
         </div>
       </div>
-      <div className="mt-16 px-4 sm:px-8 md:px-16 bg-[#D9D9D9] py-12">
-        <h3 className="text-2xl font-semibold text-center mb-8">Depoimentos de Clientes</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+      <div className="mt-16 px-4 sm:px-8 md:px-16 bg-[#F5F5F5] py-12 rounded-lg shadow-md">
+        <h3 className="text-3xl font-bold text-center mb-8">
+          Depoimentos de Clientes
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
           {[
             {
               nome: "João Silva",
@@ -142,16 +120,20 @@ const Home = () => {
           ].map((cliente, index) => (
             <div
               key={index}
-              className="bg-white shadow-lg p-6 rounded-lg hover:shadow-xl transition-shadow"
+              className="bg-white shadow-lg p-4 rounded-lg transition-shadow hover:shadow-xl flex flex-col"
             >
-              <p className="text-lg italic mb-4">"{cliente.depoimento}"</p>
-              <h4 className="text-lg font-semibold text-gray-800">{cliente.nome}</h4>
+              <p className="text-lg italic mb-4 text-gray-600">
+                "{cliente.depoimento}"
+              </p>
+              <h4 className="text-lg font-semibold text-gray-800 text-right">
+                {cliente.nome}
+              </h4>
             </div>
           ))}
         </div>
       </div>
-      <div className="mt-16 px-4 sm:px-8 md:px-16 bg-[#D9D9D9] py-12">
-        <h3 className="text-2xl font-semibold text-center mb-8">Categorias</h3>
+      <div className="mt-16 px-4 sm:px-8 md:px-16 bg-[#2A4B54] py-12">
+        <h3 className="text-2xl font-semibold text-center mb-8 text-white">Categorias</h3>
         <Carousel
           opts={{
             loop: true,
@@ -170,7 +152,10 @@ const Home = () => {
               { src: moletom, alt: "modelo3", label: "Moletons", path: "/categorias/moletons" },
             ].map((item, index) => (
               <CarouselItem key={index} className="md:basis-1/3 lg:basis-1/4">
-                <NavLink to={item.path} className="flex hover:cursor-pointer justify-center group transition-transform duration-300 ease-in-out transform hover:scale-105 sm:justify-center">
+                <NavLink
+                  to={item.path}
+                  className="flex hover:cursor-pointer justify-center group transition-transform duration-300 ease-in-out transform hover:scale-105 sm:justify-center"
+                >
                   <img
                     src={item.src}
                     alt={item.alt}
@@ -186,9 +171,13 @@ const Home = () => {
           <CarouselPrevious />
         </Carousel>
       </div>
-      <div className="mt-16 px-4 sm:px-8 md:px-16 bg-[#3C6E71] text-white py-12">
-        <h3 className="text-2xl font-semibold text-center mb-8">Novos Lançamentos</h3>
-        <p className="text-center mb-4">Confira nossos produtos mais recentes e tendências do mercado!</p>
+      <div className="mt-16 px-4 sm:px-8 md:px-16 bg-[#2A4B54] text-white py-12">
+        <h3 className="text-2xl font-semibold text-center mb-8">
+          Novos Lançamentos
+        </h3>
+        <p className="text-center mb-4">
+          Confira nossos produtos mais recentes e tendências do mercado!
+        </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {produto
             .filter((item) => item.lancamento === true)
@@ -226,4 +215,3 @@ const Home = () => {
 };
 
 export default Home;
-
