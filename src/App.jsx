@@ -13,13 +13,14 @@ import { ModalProvider } from "./context/ModalContext.jsx";
 import ProductForm from "./app/pages/ProductForm.jsx";
 import CategoryProducts from "./app/pages/CategoryProducts";
 import { useState } from "react";
+import ProductOwn from "./app/pages/ProductOwn.jsx";
 
 function App() {
   const { isAuthenticated } = useAuth();
-  const [product, setProduct] = useState([])
+  const [product, setProduct] = useState([]);
 
   return (
-    <AuthProvider value={{product, setProduct}}>
+    <AuthProvider value={{ product, setProduct }}>
       <ModalProvider>
         <BrowserRouter>
           <Navbar />
@@ -52,6 +53,7 @@ function App() {
               element={isAuthenticated ? <ProductForm /> : <Login />}
             />
             <Route path="/categorias/:slug" element={<CategoryProducts />} />
+            <Route path="/produto/:slug" element={<ProductOwn />} />
           </Routes>
         </BrowserRouter>
       </ModalProvider>

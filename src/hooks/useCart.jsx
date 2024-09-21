@@ -4,21 +4,21 @@ import axios from "axios";
 export function useCart() {
   const [cartItems, setCartItems] = useState([]);
 
-  useEffect(() => {
-    const fetchCartProducts = async () => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        try {
-          const response = await axios.get("http://localhost:5000/api/carrinho", {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          setCartItems(response.data);
-        } catch (error) {
-          console.error("Erro ao buscar itens do carrinho:", error);
-        }
+  const fetchCartProducts = async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const response = await axios.get("http://localhost:5000/api/carrinho", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setCartItems(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar itens do carrinho:", error);
       }
-    };
-
+    }
+  };
+  
+  useEffect(() => {
     fetchCartProducts();
   }, []);
 
@@ -28,6 +28,7 @@ export function useCart() {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setCartItems((prevItems) => [...prevItems, item]);
+      fetchCartProducts()
     } catch (error) {
       console.error("Erro ao adicionar item ao carrinho:", error);
     }
@@ -41,10 +42,11 @@ export function useCart() {
       setCartItems((prevItems) =>
         prevItems.filter((item) => item.produtoId !== produtoId)
       );
+      fetchCartProducts()
     } catch (error) {
       console.error("Erro ao remover item do carrinho:", error);
     }
   };
 
-  return { cartItems, addToCart, removeFromCart };
+  return { fetchCartProducts, cartItems, addToCart, removeFromCart };
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import model1 from "../assets/img/model1.jpg";
 import model2 from "../assets/img/model2.jpg";
@@ -13,6 +13,7 @@ import moletom from "../assets/img/moletom.jpg";
 import Navbar from "./components/Navbar.jsx";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth.jsx";
+import { useModal } from "../context/ModalContext.jsx";
 import {
   Carousel,
   CarouselContent,
@@ -23,10 +24,27 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import { useCart } from "../hooks/useCart.jsx";
 import { useProducts } from "../hooks/useProducts.jsx";
+import Modal from "./components/Modal.jsx";
+import ProductOwn from "./pages/ProductOwn.jsx";
+import { useLiked } from "../hooks/useLiked.jsx";
 
 const Home = () => {
   const { produto } = useProducts();
   const { addToCart } = useCart();
+  const {addToLiked} = useLiked()
+  const { openModal } = useModal();
+  const [unicProduct, setUnicProduct ] = useState(null);
+
+  const handleOpenModal = (product) => {
+    setUnicProduct(product);
+    openModal();
+  };
+
+  const isLancamento = (dataCadastro) => {
+    const umaSemana = 7 * 24 * 60 * 60 * 1000
+    const dataAtual = new Date();
+    return (dataAtual - new Date(dataCadastro)) < umaSemana
+  }
 
   return (
     <div className="relative font-sans text-gray-800">
@@ -92,6 +110,21 @@ const Home = () => {
                 >
                   Adicionar ao Carrinho
                 </button>
+                <button
+                  onClick={() => addToLiked({ ...item, quantidade: 1 })}
+                  className="mt-4 w-full py-2 font-bold text-white bg-[#1D3A34] rounded-lg hover:bg-[#274B4D] transition-colors"
+                >
+                  curtir
+                </button>
+                <button
+                  onClick={() => handleOpenModal(item)}
+                  className="mt-2 w-full py-2 font-semibold text-[#1D3A34] bg-transparent border border-[#1D3A34] rounded-lg hover:bg-[#1D3A34] hover:text-white transition-colors"
+                >
+                  Visualizar produto
+                </button>
+                <Modal>
+                {unicProduct && <ProductOwn unicProduct={unicProduct} />}
+                </Modal>
               </div>
             ))}
         </div>
@@ -180,17 +213,25 @@ const Home = () => {
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {produto
-            .filter((item) => item.lancamento === true)
+            .filter((item) => isLancamento(item.data_cadastro))
+            .slice(0, 6)
             .map((item) => (
               <div
                 key={item.id}
                 className="bg-white text-gray-800 shadow-lg p-6 rounded-lg hover:shadow-xl transition-shadow"
               >
                 <h4 className="text-lg font-semibold mb-2">{item.nome}</h4>
-                <p className="text-gray-600">{item.descricao}</p>
-                <p className="text-gray-800 font-semibold">${item.preco}</p>
+                <p className="text-gray-500">{item.descricao}</p>
+                <p className="text-gray-800 font-bold">
+                  <span className="line-through text-gray-400">
+                    ${item.preco}
+                  </span>{" "}
+                  <span className="text-red-600">
+                    ${(item.preco * (1 - item.desconto / 100)).toFixed(2)}
+                  </span>
+                </p>
                 <button
-                  onClick={() => addToCart({ ...item, quantity: 1 })}
+                  onClick={() => addToCart({ ...item, quantidade: 1 })}
                   className="mt-4 px-4 py-2 font-semibold text-white bg-[#284B63] rounded-lg hover:bg-[#353535]"
                 >
                   Adicionar ao Carrinho

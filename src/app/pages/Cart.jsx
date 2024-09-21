@@ -1,15 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth.jsx";
 import { useCart } from "../../hooks/useCart.jsx";
 
 const Cart = () => {
-  const { cartItems, removeFromCart } = useCart();
+  const { fetchCartProducts, cartItems, removeFromCart } = useCart();
 
   const calculateSubtotal = () => {
     return cartItems.reduce((total, item) => total + item.produto.preco * (1 - item.produto.desconto / 100).toFixed(2) * item.quantidade, 0);
   };
   console.log(cartItems)
+
+  const deletaDoCarrinho = async (product) => {
+    await removeFromCart(product);
+    fetchCartProducts()
+  }
   
   return (
     <div className="container mx-auto px-4 py-8">
@@ -27,7 +32,7 @@ const Cart = () => {
                   <p className="text-gray-600">Quantidade: {item.quantidade}</p>
                 </div>
                 <button
-                  onClick={() => removeFromCart(item.id)}
+                  onClick={() => deletaDoCarrinho(item.id)}
                   className="text-[#FF6B6B] hover:underline transition-colors"
                 >
                   Remover
