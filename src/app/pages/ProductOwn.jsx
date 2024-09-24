@@ -1,8 +1,11 @@
 import React from "react";
 import { useCart } from "../../hooks/useCart.jsx";
+import { useComments } from "../../hooks/useComments.jsx"; 
+import ProductComments from "../components/ProductComments.jsx";
 
 const ProductOwn = ({ unicProduct }) => {
   const { addToCart } = useCart();
+  const { addComment } = useComments(unicProduct.id); 
   if (!unicProduct) {
     return (
       <p className="text-center text-gray-500 text-lg">
@@ -57,6 +60,7 @@ const ProductOwn = ({ unicProduct }) => {
         >
           Adicionar ao Carrinho
         </button>
+        <ProductComments produtoId={unicProduct.id} onAddComment={addComment} />
       </div>
     </div>
   );
