@@ -14,6 +14,7 @@ import ProductForm from "./app/pages/ProductForm.jsx";
 import CategoryProducts from "./app/pages/CategoryProducts";
 import { useState } from "react";
 import ProductOwn from "./app/pages/ProductOwn.jsx";
+import DashboardMod from "./app/pages/DashboardMod.jsx";
 
 function App() {
   const { isAuthenticated } = useAuth();
@@ -52,6 +53,7 @@ function App() {
               path="/add-product"
               element={isAuthenticated ? <ProductForm /> : <Login />}
             />
+            <Route path="/home/dashboard-mod" element={<DashboardMod />} />
             <Route path="/categorias/:slug" element={<CategoryProducts />} />
             <Route path="/produto/:slug" element={<ProductOwn />} />
           </Routes>

@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useAuth } from "./useAuth.jsx";
 
 export function useComments(produtoId) {
   const [comments, setComments] = useState([]);
+  const { userId, userRole } = useAuth();
 
   const fetchComments = async () => {
     try {
@@ -28,7 +30,7 @@ export function useComments(produtoId) {
     const token = localStorage.getItem("token");
     if (token) {
       try {
-        const commentData = { texto, produtoId };
+        const commentData = { texto, produtoId, userType:userRole };
         const response = await axios.post(
           `http://localhost:5000/api/comentarios/produtos/${produtoId}/comentarios`,
           commentData,

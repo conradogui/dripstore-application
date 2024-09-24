@@ -69,6 +69,14 @@ const Navbar = () => {
             Dashboard Admin
           </Link>
         )}
+        {isAuthenticated && userRole.includes("PERFIL_MODERADOR") && (
+          <Link
+            to="/home/dashboard-mod"
+            className="cursor-pointer hover:text-[#FF6B6B] transition-colors"
+          >
+            Dashboard Moderador
+          </Link>
+        )}
       </div>
       <div className="flex items-center space-x-6">
         <Link
