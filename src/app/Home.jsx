@@ -48,6 +48,7 @@ const Home = () => {
 
   return (
     <div className="relative font-sans text-gray-800">
+          <Navbar />
       <div>
         <Carousel
           opts={{

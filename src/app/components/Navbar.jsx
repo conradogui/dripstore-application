@@ -15,7 +15,7 @@ const Navbar = () => {
   const { isAuthenticated, userRole, logout } = useAuth();
 
   return (
-    <nav className="flex justify-between items-center px-6 py-4 bg-[#1D2A34] text-white shadow-md w-full">
+    <nav className="flex justify-between items-center px-6 py-4 bg-[#1D2A34] text-white shadow-md w-full fixed z-10">
       <Link
         to={isAuthenticated ? "/home" : "/"}
         className="flex items-center text-4xl font-bold transition-transform transform hover:scale-110"

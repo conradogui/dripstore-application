@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import Home from "./app/Home";
@@ -12,48 +12,52 @@ import DashboardAdmin from "./app/pages/DashboardAdmin.jsx";
 import { ModalProvider } from "./context/ModalContext.jsx";
 import ProductForm from "./app/pages/ProductForm.jsx";
 import CategoryProducts from "./app/pages/CategoryProducts";
-import { useState } from "react";
 import ProductOwn from "./app/pages/ProductOwn.jsx";
 import DashboardMod from "./app/pages/DashboardMod.jsx";
+import { useEffect } from "react";
 
 function App() {
   const { isAuthenticated } = useAuth();
-  const [product, setProduct] = useState([]);
+
+
+
 
   return (
-    <AuthProvider value={{ product, setProduct }}>
+    <AuthProvider value={{ isAuthenticated }}>
       <ModalProvider>
         <BrowserRouter>
-          <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route
               path="/home"
-              element={isAuthenticated ? <Home /> : <Login />}
+              element={isAuthenticated ? <Home /> : <Navigate to="/login" />}
             />
             <Route
               path="/home/cart"
-              element={isAuthenticated ? <Cart /> : <Login />}
+              element={isAuthenticated ? <Cart /> : <Navigate to="/login" />}
             />
             <Route
               path="/home/profile"
-              element={isAuthenticated ? <Profile /> : <Login />}
+              element={isAuthenticated ? <Profile /> : <Navigate to="/login" />}
             />
             <Route
               path="/home/wish"
-              element={isAuthenticated ? <WishList /> : <Login />}
+              element={isAuthenticated ? <WishList /> : <Navigate to="/login" />}
             />
             <Route
               path="/home/dashboard-admin"
-              element={isAuthenticated ? <DashboardAdmin /> : <Login />}
+              element={isAuthenticated ? <DashboardAdmin /> : <Navigate to="/login" />}
             />
             <Route
               path="/add-product"
-              element={isAuthenticated ? <ProductForm /> : <Login />}
+              element={isAuthenticated ? <ProductForm /> : <Navigate to="/login" />}
             />
-            <Route path="/home/dashboard-mod" element={<DashboardMod />} />
+            <Route
+              path="/home/dashboard-mod"
+              element={isAuthenticated ? <DashboardMod /> : <Navigate to="/login" />}
+            />
             <Route path="/categorias/:slug" element={<CategoryProducts />} />
             <Route path="/produto/:slug" element={<ProductOwn />} />
           </Routes>
