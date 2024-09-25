@@ -15,7 +15,7 @@ const DashboardMod = () => {
             <h2 className="text-xl font-semibold text-[#333] mb-4">
               Produto: {product.nome}
             </h2>
-            <ListModerator produtoId={product.id} />
+            <ListModerator produtoId={product.id}/>
           </div>
         ))
       ) : (

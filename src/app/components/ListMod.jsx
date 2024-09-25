@@ -1,8 +1,12 @@
 import React from "react";
 import { useComments } from "../../hooks/useComments.jsx";
 
-const ListModerator = ({ produtoId, handleDeleteComment }) => {
-  const { comments } = useComments(produtoId);
+const ListModerator = ({ produtoId }) => {
+  const { comments, removeComment } = useComments(produtoId);
+  
+  const handleDelete = (commentId) => {
+    removeComment(commentId);
+  }
 
   return (
     <div>
@@ -18,7 +22,7 @@ const ListModerator = ({ produtoId, handleDeleteComment }) => {
                 Usuário: {comment.usuario.nome}
               </span>
               <button
-                onClick={() => handleDeleteComment(comment.id)}
+                onClick={() => handleDelete(comment.id)}
                 className="mt-2 text-sm text-red-500 hover:underline"
               >
                 Remover comentário
