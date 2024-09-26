@@ -4,7 +4,6 @@ import { AuthProvider } from "./context/AuthContext.jsx";
 import Home from "./app/Home";
 import Login from "./app/Login";
 import Register from "./app/Register";
-import Navbar from "./app/components/Navbar";
 import Cart from "./app/pages/Cart";
 import Profile from "./app/pages/Profile";
 import WishList from "./app/pages/WishList";
@@ -14,7 +13,6 @@ import ProductForm from "./app/pages/ProductForm.jsx";
 import CategoryProducts from "./app/pages/CategoryProducts";
 import ProductOwn from "./app/pages/ProductOwn.jsx";
 import DashboardMod from "./app/pages/DashboardMod.jsx";
-import { useEffect } from "react";
 
 function App() {
   const { isAuthenticated } = useAuth();

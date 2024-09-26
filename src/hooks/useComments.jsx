@@ -41,6 +41,7 @@ export function useComments(produtoId) {
         setComments((prevComments) => [...prevComments, response.data]);
       } catch (error) {
         console.error("Erro ao adicionar comentário:", error);
+        alert("Você precisa está logado para fazer um comentario.");
       }
     }
   };
@@ -60,6 +61,7 @@ export function useComments(produtoId) {
         );
       } catch (error) {
         console.error("Erro ao remover comentário:", error);
+        alert("Você não tem permissão para deletar esse comentario.");
       }
     }
   };

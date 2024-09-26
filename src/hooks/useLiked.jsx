@@ -31,6 +31,7 @@ export function useLiked() {
       fetchLikedItems()
     } catch (error) {
       console.error("Erro ao adicionar item aos curtidos:", error);
+      alert("Você precisa está logado para curtir um produto.");
     }
   };
 

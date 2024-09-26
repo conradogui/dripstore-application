@@ -54,7 +54,7 @@ const Register = () => {
   return (
     <div >
       <Navbar/>
-      <div className="relative flex flex-col md:flex-row items-center justify-center min-h-screen bg-[#D9D9D9]">
+      <div className="relative flex flex-col md:flex-row items-center justify-center min-h-screen bg-[#D9D9D9] pt-14">
         <div className="absolute inset-0 bg-gradient-to-r from-[#D9D9D9] to-[#FFFFFF] opacity-60"></div>
         <div className="hidden md:block md:w-1/2 h-full relative z-10 border-none bg-transparent">
           <img src={shoes} alt="Shoes" className="min-w-80 h-full object-cover" />

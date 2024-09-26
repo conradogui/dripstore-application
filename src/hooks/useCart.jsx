@@ -31,6 +31,7 @@ export function useCart() {
       fetchCartProducts()
     } catch (error) {
       console.error("Erro ao adicionar item ao carrinho:", error);
+      alert("Você precisa está logado para adicionar ao carrinho.");
     }
   };
 

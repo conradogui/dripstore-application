@@ -2,10 +2,12 @@ import React from "react";
 import { useCart } from "../../hooks/useCart.jsx";
 import { useComments } from "../../hooks/useComments.jsx"; 
 import ProductComments from "../components/ProductComments.jsx";
+import { useAuth } from "../../hooks/useAuth.jsx";
 
 const ProductOwn = ({ unicProduct }) => {
   const { addToCart } = useCart();
   const { addComment } = useComments(unicProduct.id); 
+  const { isAuthenticated } = useAuth();
   if (!unicProduct) {
     return (
       <p className="text-center text-gray-500 text-lg">
@@ -18,6 +20,14 @@ const ProductOwn = ({ unicProduct }) => {
     unicProduct.preco *
     (1 - unicProduct.desconto / 100)
   ).toFixed(2);
+
+  const alertaUser = () => {
+    if(!isAuthenticated) {
+      return (
+        alert("para fsferf")
+      )
+    }
+  }
 
   return (
     <div className="p-8">

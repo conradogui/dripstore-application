@@ -14,6 +14,7 @@ import Navbar from "./components/Navbar.jsx";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth.jsx";
 import { useModal } from "../context/ModalContext.jsx";
+import { Heart } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -111,18 +112,20 @@ const Home = () => {
                 >
                   Adicionar ao Carrinho
                 </button>
-                <button
-                  onClick={() => addToLiked({ ...item, quantidade: 1 })}
-                  className="mt-4 w-full py-2 font-bold text-white bg-[#1D3A34] rounded-lg hover:bg-[#274B4D] transition-colors"
-                >
-                  curtir
-                </button>
-                <button
-                  onClick={() => handleOpenModal(item)}
-                  className="mt-2 w-full py-2 font-semibold text-[#1D3A34] bg-transparent border border-[#1D3A34] rounded-lg hover:bg-[#1D3A34] hover:text-white transition-colors"
-                >
-                  Visualizar produto
-                </button>
+                <div className="flex justify-around">
+                  <button
+                    onClick={() => handleOpenModal(item)}
+                    className="mt-2 w-1/2 py-2 font-semibold text-[#1D3A34] bg-transparent border border-[#1D3A34] rounded-lg hover:bg-[#1D3A34] hover:text-white transition-colors"
+                  >
+                    Visualizar produto
+                  </button>
+                  <button
+                    onClick={() => addToLiked({ ...item, quantidade: 1 })}
+                    className="mt-4 w-12 flex justify-center py-2 font-bold text-white bg-[#1D3A34] rounded-lg hover:bg-[#274B4D] transition-colors"
+                  >
+                    <Heart/>
+                  </button>
+                </div>
                 <Modal>
                 {unicProduct && <ProductOwn unicProduct={unicProduct} />}
                 </Modal>
@@ -237,6 +240,20 @@ const Home = () => {
                 >
                   Adicionar ao Carrinho
                 </button>
+                <div className="flex justify-between">
+                  <button
+                    onClick={() => handleOpenModal(item)}
+                    className="mt-2 w-1/2 py-2 font-semibold text-[#1D3A34] bg-transparent border border-[#1D3A34] rounded-lg hover:bg-[#1D3A34] hover:text-white transition-colors"
+                  >
+                    Visualizar produto
+                  </button>
+                  <button
+                    onClick={() => addToLiked({ ...item, quantidade: 1 })}
+                    className="mt-4 w-12 flex justify-center py-2 font-bold text-white bg-[#1D3A34] rounded-lg hover:bg-[#274B4D] transition-colors"
+                  >
+                    <Heart/>
+                  </button>
+                </div>
               </div>
             ))}
         </div>
