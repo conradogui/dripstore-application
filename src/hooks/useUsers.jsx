@@ -10,7 +10,7 @@ export function useUsers() {
 
     if (token && storedRoles?.includes("PERFIL_ADMIN")) {
       axios
-        .get("http://localhost:5000/api/usuario", {
+        .get("https://dripstore-api-y1ak.onrender.com/api/usuario", {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => setUsers(response.data))

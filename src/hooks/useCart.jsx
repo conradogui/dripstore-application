@@ -8,7 +8,7 @@ export function useCart() {
     const token = localStorage.getItem("token");
     if (token) {
       try {
-        const response = await axios.get("http://localhost:5000/api/carrinho", {
+        const response = await axios.get("https://dripstore-api-y1ak.onrender.com/api/carrinho", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setCartItems(response.data);
@@ -24,7 +24,7 @@ export function useCart() {
 
   const addToCart = async (item) => {
     try {
-      await axios.post("http://localhost:5000/api/carrinho", item, {
+      await axios.post("https://dripstore-api-y1ak.onrender.com/api/carrinho", item, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setCartItems((prevItems) => [...prevItems, item]);
@@ -37,7 +37,7 @@ export function useCart() {
 
   const removeFromCart = async (produtoId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/carrinho/${produtoId}`, {
+      await axios.delete(`https://dripstore-api-y1ak.onrender.com/api/carrinho/${produtoId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setCartItems((prevItems) =>

@@ -9,7 +9,7 @@ export function useComments(produtoId) {
   const fetchComments = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/comentarios/produtos/${produtoId}/comentarios`
+        `https://dripstore-api-y1ak.onrender.com/api/comentarios/produtos/${produtoId}/comentarios`
       );
       setComments(response.data);
     } catch (error) {
@@ -32,7 +32,7 @@ export function useComments(produtoId) {
       try {
         const commentData = { texto, produtoId, userType:userRole };
         const response = await axios.post(
-          `http://localhost:5000/api/comentarios/produtos/${produtoId}/comentarios`,
+          `https://dripstore-api-y1ak.onrender.com/api/comentarios/produtos/${produtoId}/comentarios`,
           commentData,
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -51,7 +51,7 @@ export function useComments(produtoId) {
     if (token) {
       try {
         await axios.delete(
-          `http://localhost:5000/api/comentarios/produtos/${produtoId}/comentarios/${commentId}`,
+          `https://dripstore-api-y1ak.onrender.com/api/comentarios/produtos/${produtoId}/comentarios/${commentId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }

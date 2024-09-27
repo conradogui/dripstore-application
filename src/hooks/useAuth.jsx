@@ -20,7 +20,7 @@ export function useAuth() {
 
   const handleLogin = async (email, senha) => {
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/signin", {
+      const response = await axios.post("https://dripstore-api-y1ak.onrender.com/api/auth/signin", {
         email,
         senha,
       });

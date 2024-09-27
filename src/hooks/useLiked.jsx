@@ -8,7 +8,7 @@ export function useLiked() {
     const token = localStorage.getItem("token");
     if (token) {
       try {
-        const response = await axios.get("http://localhost:5000/api/curtidos", {
+        const response = await axios.get("https://dripstore-api-y1ak.onrender.com/api/curtidos", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setLikedItems(response.data);
@@ -24,7 +24,7 @@ export function useLiked() {
 
   const addToLiked = async (item) => {
     try {
-      await axios.post("http://localhost:5000/api/curtidos", item, {
+      await axios.post("https://dripstore-api-y1ak.onrender.com/api/curtidos", item, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setLikedItems((prevItems) => [...prevItems, item]);
@@ -37,7 +37,7 @@ export function useLiked() {
 
   const removeFromLiked = async (produtoId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/curtidos/${produtoId}`, {
+      await axios.delete(`https://dripstore-api-y1ak.onrender.com/api/curtidos/${produtoId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setLikedItems((prevItems) =>

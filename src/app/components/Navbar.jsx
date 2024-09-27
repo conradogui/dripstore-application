@@ -69,12 +69,12 @@ const Navbar = () => {
                     isOpen ? "grid gap-3 text-center" : "grid gap-5 text-center"
                   }`}>
                     {[
-                      { label: "Calça", path: "/categorias/calca" },
-                      { label: "Tênis", path: "/categorias/tenis" },
+                      { label: "Calça", path: "/categorias/calça" },
+                      { label: "Tênis", path: "/categorias/tênis" },
                       { label: "Short", path: "/categorias/short" },
                       { label: "Camisa", path: "/categorias/camisa" },
                       { label: "Camiseta", path: "/categorias/camiseta" },
-                      { label: "Acessórios", path: "/categorias/acessorios" },
+                      { label: "Acessórios", path: "/categorias/acessórios" },
                       { label: "Moletons", path: "/categorias/moletons" },
                     ].map((item, index) => (
                       <li key={index}>
