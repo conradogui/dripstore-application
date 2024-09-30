@@ -10,11 +10,11 @@ function Profile() {
     email: "",
   });
 
-  useEffect(() => {
+  useEffect(() => { 
     if (userId) {
       const fetchUserData = async () => {
         try {
-          const response = await fetch(`http://localhost:5000/api/usuario/${userId}`, {
+          const response = await fetch(`https://dripstore-api-y1ak.onrender.com/api/usuario/${userId}`, {
             headers: {
               "Authorization": `Bearer ${localStorage.getItem("token")}`
             }
